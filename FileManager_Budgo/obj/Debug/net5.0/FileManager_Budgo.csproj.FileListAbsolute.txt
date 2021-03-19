@@ -1,0 +1,16 @@
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\FileManager_Budgo.exe
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\FileManager_Budgo.deps.json
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\FileManager_Budgo.runtimeconfig.json
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\FileManager_Budgo.runtimeconfig.dev.json
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\FileManager_Budgo.dll
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\ref\FileManager_Budgo.dll
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\FileManager_Budgo.pdb
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.csprojAssemblyReference.cache
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.GeneratedMSBuildEditorConfig.editorconfig
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.AssemblyInfoInputs.cache
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.AssemblyInfo.cs
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.csproj.CoreCompileInputs.cache
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.dll
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\ref\FileManager_Budgo.dll
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.pdb
+D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.genruntimeconfig.cache
