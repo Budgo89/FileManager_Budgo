@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace FileManager_Budgo
 {
@@ -23,10 +24,45 @@ namespace FileManager_Budgo
             Console.WriteLine("exit-Выход");
         }
         
+        static void PrintDir(DirectoryInfo dir, string indent, bool lastDirectory, string fail)
+        {
+            string text;
+            Console.Write(indent);
+            File.AppendAllText(fail, indent);
+            if (lastDirectory)
+            {
+                Console.Write("└─");
+                text = "└─";
+                File.AppendAllText(fail, text);
+                indent += "  ";
+                                
+            }
+            else
+            {
+                Console.Write("├─");
+                text = "├─";
+                File.AppendAllText(fail, text);
+                indent += "│ ";                              
+            }
+
+            Console.WriteLine(dir.Name);
+            File.AppendAllText(fail, dir.Name);
+            File.AppendAllText(fail, Environment.NewLine);
+
+            DirectoryInfo[] subDirs = dir.GetDirectories();
+
+            for (int i = 0; i < subDirs.Length; i++)
+            {
+                PrintDir(subDirs[i], indent, i == subDirs.Length - 1, fail);
+            }
+        }
+        
+        
         static void Main(string[] args)
         {
             string memu;
             bool end = false;
+            Console.SetBufferSize(120, 100)
             do
             {
                 memu = Console.ReadLine();
@@ -36,7 +72,12 @@ namespace FileManager_Budgo
                         help();
                         break;
                     case "ls":
-                        help();
+                        string put = @"E:\Battle.net";
+                        string filename1 = "strukturDir.txt";
+                        DateTime localDate = DateTime.Now;
+                        File.WriteAllText(filename1, Convert.ToString(localDate));
+                        File.AppendAllText(filename1, Environment.NewLine);
+                        PrintDir(new DirectoryInfo(put), "", true, filename1);
                         break;
                     case "cd":
                         help();
@@ -54,7 +95,6 @@ namespace FileManager_Budgo
                         help();
                         break;
                     case "exit":
-                        help();
                         end = true;
                         break;
                     default:
