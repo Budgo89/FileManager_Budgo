@@ -160,6 +160,10 @@ namespace FileManager_Budgo
             {
                 Console.WriteLine("Каталог не найден: " + dirEx.Message);
             }
+            catch (IOException)
+            {
+                Console.WriteLine("Каталог не найден: ");
+            }
         }
         /// <summary>
         /// 
@@ -174,13 +178,49 @@ namespace FileManager_Budgo
             return nevDir;
         }
 
+        static void cp (string dirName, string cat)
+        {
+            try
+            {
+                Console.WriteLine("Введите новое название файла: ");
+                string newcat = Console.ReadLine();
+                CopyDirectory(Path.Combine(dirName, cat), Path.Combine(dirName, newcat));
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("Такого файла нет!");
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("Файл с таким именем уже существует или не найден!");
+            }
+
+        }
+        static void CopyDirectory(string lastDir, string end_dir)
+        {
+            DirectoryInfo dir_inf = new DirectoryInfo(lastDir);
+            foreach (DirectoryInfo dir in dir_inf.GetDirectories())
+            {
+                if (Directory.Exists(end_dir + "\\" + dir.Name) != true)
+                {
+                    Directory.CreateDirectory(end_dir + "\\" + dir.Name);
+                }
+                CopyDirectory(dir.FullName, end_dir + "\\" + dir.Name);
+                foreach (string file in Directory.GetFiles(lastDir))
+                {
+                    string filik = file.Substring(file.LastIndexOf('\\'), file.Length - file.LastIndexOf('\\'));
+                    File.Copy(file, end_dir + "\\" + filik, true);
+                }
+            }
+        }
+
 
         static void Main(string[] args)
         {
             string memu;
             bool end = false;
             string config = "Config.txt";
-            string configDir = "";
+            string configDir = @"C:\";
             help();
             do
             {                
@@ -207,10 +247,16 @@ namespace FileManager_Budgo
                         
                         break;
                     case "cp":
-                        
+                        Console.WriteLine("Введите название файла или каталога для копирования: ");
+                        string cpCat = Console.ReadLine();
+                        configDir = File.ReadAllText(config);
+                        cp(configDir, cpCat);
                         break;
                     case "cr":
-                        
+                        Console.WriteLine("Введите название файла или каталога для копирования: ");
+                        string crCat = Console.ReadLine();
+                        configDir = File.ReadAllText(config);
+                        cp(configDir, crCat);
                         break;
                     case "file":
                         configDir = File.ReadAllText(config);
