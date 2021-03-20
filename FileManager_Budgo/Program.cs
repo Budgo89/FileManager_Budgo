@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace FileManager_Budgo
@@ -23,46 +24,132 @@ namespace FileManager_Budgo
             Console.WriteLine(@"   file C:\source.txt");
             Console.WriteLine("exit-Выход");
         }
-        
-        static void PrintDir(DirectoryInfo dir, string indent, bool lastDirectory, string fail)
+
+        static void Catalog(DirectoryInfo dir, string indent, bool lastDirectory)
         {
-            string text;
-            Console.Write(indent);
-            File.AppendAllText(fail, indent);
+           
+            Console.Write(indent);            
             if (lastDirectory)
             {
-                Console.Write("└─");
-                text = "└─";
-                File.AppendAllText(fail, text);
+                Console.Write("└─");     
                 indent += "  ";
-                                
+
             }
             else
             {
                 Console.Write("├─");
-                text = "├─";
-                File.AppendAllText(fail, text);
-                indent += "│ ";                              
+                indent += "│ ";
             }
 
             Console.WriteLine(dir.Name);
-            File.AppendAllText(fail, dir.Name);
-            File.AppendAllText(fail, Environment.NewLine);
 
             DirectoryInfo[] subDirs = dir.GetDirectories();
+            
+            FileInfo[] subfill = dir.GetFiles();           
 
-            for (int i = 0; i < subDirs.Length; i++)
+            if (subDirs.Length >= 10)
             {
-                PrintDir(subDirs[i], indent, i == subDirs.Length - 1, fail);
+                int subDirscoll = 0;
+                int i1 = subDirscoll;
+                bool flag = true;
+                do
+                {
+                    if(subDirscoll+10 >= subDirs.Length )
+                    {
+                        i1 = subDirs.Length-11;
+                    }
+                    else i1 = subDirscoll;                    
+                    for (int i = subDirscoll; i < i1 + 10; i++)
+                    {
+                        Console.WriteLine(subDirs[i]);                        
+                        subDirscoll++;                        
+                    }
+                    
+                    if (subDirscoll < subDirs.Length - 10)
+                    {
+                        Console.WriteLine("...");
+                        Console.WriteLine("Продолжить вывод? дa / нет");
+                        string cat = Console.ReadLine();
+                        switch (cat)
+                        {
+                            case "да":
+                                flag = true;
+                                break;
+                            case "нет":
+                                flag = false;
+                                break;
+                            default:
+                                Console.WriteLine("Введена не правильная команда. Вывод продолжится автомотически.");
+                                flag = true;
+                                break;
+                        }                       
+                    }
+                    else flag = false;
+                }
+                while (flag);
+            }
+            else 
+            {
+                for (int i = 0; i < subDirs.Length; i++)
+                {
+                    Console.WriteLine(subDirs[i]);
+                }
+            }
+            if (subfill.Length >= 10)
+            {
+                int subfillcoll = 0;
+                int i1 = subfillcoll;
+                bool flag = true;
+                do
+                {                    
+                    if (subfillcoll + 10 >= subfill.Length)
+                    {
+                        i1 = subDirs.Length - 11;
+                    }
+                    else i1 = subfillcoll;
+                    for (int i = subfillcoll; i < i1 + 10; i++)
+                    {
+                        Console.WriteLine(subfill[i]);                        
+                        subfillcoll++;
+                    }
+                    
+                    if (subfillcoll <= subfill.Length - 10)
+                    {
+                        Console.WriteLine("...");
+                        Console.WriteLine("Продолжить вывод? дa / нет");
+                        string cat = Console.ReadLine();
+                        switch (cat)
+                        {
+                            case "да":
+                                flag = true;
+                                break;
+                            case "нет":
+                                flag = false;
+                                break;
+                            default:
+                                Console.WriteLine("Введена не правильная команда. Вывод продолжится автомотически.");
+                                flag = true;
+                                break;
+                        }
+                    }
+                }
+                while (flag);
+            }
+            else
+            {
+                for (int i = 0; i < subfill.Length; i++)
+                {
+                    Console.WriteLine(subfill[i]);
+                }
             }
         }
-        
-        
+
+
+
         static void Main(string[] args)
         {
             string memu;
-            bool end = false;
-            Console.SetBufferSize(120, 100)
+            bool end = false;            
             do
             {
                 memu = Console.ReadLine();
@@ -72,12 +159,11 @@ namespace FileManager_Budgo
                         help();
                         break;
                     case "ls":
-                        string put = @"E:\Battle.net";
-                        string filename1 = "strukturDir.txt";
-                        DateTime localDate = DateTime.Now;
-                        File.WriteAllText(filename1, Convert.ToString(localDate));
-                        File.AppendAllText(filename1, Environment.NewLine);
-                        PrintDir(new DirectoryInfo(put), "", true, filename1);
+                        Console.WriteLine("Введите путь к каталогу: ");
+                        string folderPath = Console.ReadLine();
+                        DirectoryInfo dir = new DirectoryInfo(folderPath);
+                        Catalog(dir, "", true);
+
                         break;
                     case "cd":
                         help();
