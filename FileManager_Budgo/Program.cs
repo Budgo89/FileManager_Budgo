@@ -25,28 +25,8 @@ namespace FileManager_Budgo
             Console.WriteLine("exit-Выход");
         }
 
-        static void Catalog(DirectoryInfo dir, string indent, bool lastDirectory)
+        static void CatalogDirs(DirectoryInfo[] subDirs)
         {
-           
-            Console.Write(indent);            
-            if (lastDirectory)
-            {
-                Console.Write("└─");     
-                indent += "  ";
-
-            }
-            else
-            {
-                Console.Write("├─");
-                indent += "│ ";
-            }
-
-            Console.WriteLine(dir.Name);
-
-            DirectoryInfo[] subDirs = dir.GetDirectories();
-            
-            FileInfo[] subfill = dir.GetFiles();           
-
             if (subDirs.Length >= 10)
             {
                 int subDirscoll = 0;
@@ -54,66 +34,27 @@ namespace FileManager_Budgo
                 bool flag = true;
                 do
                 {
-                    if(subDirscoll+10 >= subDirs.Length )
+                    if (subDirscoll + 10 >= subDirs.Length)
                     {
-                        i1 = subDirs.Length-11;
+                        for (int i = subDirscoll; i < subDirs.Length; i++)
+                        {
+                            Console.Write("├─");
+                            Console.WriteLine(subDirs[i]);
+                            subDirscoll++;
+                        }
+
+                        flag = false;
+                        
                     }
-                    else i1 = subDirscoll;                    
+                    else i1 = subDirscoll;
                     for (int i = subDirscoll; i < i1 + 10; i++)
                     {
-                        Console.WriteLine(subDirs[i]);                        
-                        subDirscoll++;                        
+                        Console.Write("├─");
+                        Console.WriteLine(subDirs[i]);
+                        subDirscoll++;
                     }
-                    
-                    if (subDirscoll < subDirs.Length - 10)
-                    {
-                        Console.WriteLine("...");
-                        Console.WriteLine("Продолжить вывод? дa / нет");
-                        string cat = Console.ReadLine();
-                        switch (cat)
-                        {
-                            case "да":
-                                flag = true;
-                                break;
-                            case "нет":
-                                flag = false;
-                                break;
-                            default:
-                                Console.WriteLine("Введена не правильная команда. Вывод продолжится автомотически.");
-                                flag = true;
-                                break;
-                        }                       
-                    }
-                    else flag = false;
-                }
-                while (flag);
-            }
-            else 
-            {
-                for (int i = 0; i < subDirs.Length; i++)
-                {
-                    Console.WriteLine(subDirs[i]);
-                }
-            }
-            if (subfill.Length >= 10)
-            {
-                int subfillcoll = 0;
-                int i1 = subfillcoll;
-                bool flag = true;
-                do
-                {                    
-                    if (subfillcoll + 10 >= subfill.Length)
-                    {
-                        i1 = subDirs.Length - 11;
-                    }
-                    else i1 = subfillcoll;
-                    for (int i = subfillcoll; i < i1 + 10; i++)
-                    {
-                        Console.WriteLine(subfill[i]);                        
-                        subfillcoll++;
-                    }
-                    
-                    if (subfillcoll <= subfill.Length - 10)
+
+                    if (subDirscoll < subDirs.Length)
                     {
                         Console.WriteLine("...");
                         Console.WriteLine("Продолжить вывод? дa / нет");
@@ -137,11 +78,85 @@ namespace FileManager_Budgo
             }
             else
             {
-                for (int i = 0; i < subfill.Length; i++)
+                for (int i = 0; i < subDirs.Length; i++)
                 {
-                    Console.WriteLine(subfill[i]);
+                    Console.Write("├─");
+                    Console.WriteLine(subDirs[i]);
                 }
             }
+        }
+
+        static void Catalogfile(FileInfo[] subfile)
+        {
+            if (subfile.Length >= 10)
+            {
+                int subfilecoll = 0;
+                int i1 = subfilecoll;
+                bool flag = true;
+                do
+                {
+                    if (subfilecoll + 10 >= subfile.Length)
+                    {
+                        for (int i = subfilecoll; i < subfile.Length; i++)
+                        {
+                            Console.Write("└─");
+                            Console.WriteLine(subfile[i]);
+                            subfilecoll++;
+                        }
+
+                        flag = false;
+                    }
+                    else i1 = subfilecoll;
+                    for (int i = subfilecoll; i < i1 + 10; i++)
+                    {
+                        Console.Write("└─");
+                        Console.WriteLine(subfile[i]);
+                        subfilecoll++;
+                    }
+
+                    if (subfilecoll < subfile.Length - 10)
+                    {
+                        Console.WriteLine("...");
+                        Console.WriteLine("Продолжить вывод? дa / нет");
+                        string cat = Console.ReadLine();
+                        switch (cat)
+                        {
+                            case "да":
+                                flag = true;
+                                break;
+                            case "нет":
+                                flag = false;
+                                break;
+                            default:
+                                Console.WriteLine("Введена не правильная команда. Вывод продолжится автомотически.");
+                                flag = true;
+                                break;
+                        }
+                    }
+                }
+                while (flag);
+            }
+            else
+            {
+                for (int i = 0; i < subfile.Length; i++)
+                {
+                    Console.Write("└─");
+                    Console.WriteLine(subfile[i]);
+                }
+            }
+        }
+
+        static void Catalog(DirectoryInfo dir)
+        {
+            Console.WriteLine(dir.Name);
+
+            DirectoryInfo[] subDirs = dir.GetDirectories();
+            
+            FileInfo[] subfile = dir.GetFiles();
+
+            CatalogDirs(subDirs);
+
+            Catalogfile(subfile);
         }
 
 
@@ -152,6 +167,7 @@ namespace FileManager_Budgo
             bool end = false;            
             do
             {
+                help();
                 memu = Console.ReadLine();
                 switch (@memu)
                 {
@@ -162,7 +178,7 @@ namespace FileManager_Budgo
                         Console.WriteLine("Введите путь к каталогу: ");
                         string folderPath = Console.ReadLine();
                         DirectoryInfo dir = new DirectoryInfo(folderPath);
-                        Catalog(dir, "", true);
+                        Catalog(dir);
 
                         break;
                     case "cd":
