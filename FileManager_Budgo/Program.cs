@@ -9,20 +9,15 @@ namespace FileManager_Budgo
         static void help()
         {
             Console.WriteLine(@"ls -Выводит список файлов в каталоге");
-            Console.WriteLine(@"   ls C:\Source -p 2");
             Console.WriteLine(@"cd-Переход в каталог");
-            Console.WriteLine(@"   cd C:\Source ");
-            Console.WriteLine("rm-Удаление файла или каталога");
-            Console.WriteLine(@"   rm C:\Source");
-            Console.WriteLine(@"   rm C:\source.txt");
+            Console.WriteLine(@"rm-Удаление файла или каталога");
             Console.WriteLine(@"cp-Копирование каталога или файла");
-            Console.WriteLine(@"   cp C:\Source D:\Target");
-            Console.WriteLine(@"   cp C:\source.txt D:\target.txt");
-            Console.WriteLine(@"cr-Создание файла");
-            Console.WriteLine(@"   cr C:\source.txt");
-            Console.WriteLine(@"file -Вывод информации");
-            Console.WriteLine(@"   file C:\source.txt");
-            Console.WriteLine("exit-Выход");
+            Console.WriteLine(@"crfile-Создание файла");
+            Console.WriteLine(@"crcat-Создание файла");
+            Console.WriteLine(@"file-Вывод содержания текущего каталога");
+            Console.WriteLine(@"info-информация о файле или каталоге");
+
+            Console.WriteLine(@"exit-Выход");
         }
 
         static void CatalogDirs(DirectoryInfo[] subDirs)
@@ -39,7 +34,7 @@ namespace FileManager_Budgo
                         for (int i = subDirscoll; i < subDirs.Length; i++)
                         {
                             Console.Write("├─");
-                            Console.WriteLine(subDirs[i]);
+                            Console.WriteLine(subDirs[i].Name);
                             subDirscoll++;
                         }
 
@@ -50,7 +45,7 @@ namespace FileManager_Budgo
                     for (int i = subDirscoll; i < i1 + 10; i++)
                     {
                         Console.Write("├─");
-                        Console.WriteLine(subDirs[i]);
+                        Console.WriteLine(subDirs[i].Name);
                         subDirscoll++;
                     }
 
@@ -81,7 +76,7 @@ namespace FileManager_Budgo
                 for (int i = 0; i < subDirs.Length; i++)
                 {
                     Console.Write("├─");
-                    Console.WriteLine(subDirs[i]);
+                    Console.WriteLine(subDirs[i].Name);
                 }
             }
         }
@@ -99,8 +94,8 @@ namespace FileManager_Budgo
                     {
                         for (int i = subfilecoll; i < subfile.Length; i++)
                         {
-                            Console.Write("└─");
-                            Console.WriteLine(subfile[i]);
+                            Console.Write("─");
+                            Console.WriteLine(subfile[i].Name);
                             subfilecoll++;
                         }
 
@@ -109,8 +104,8 @@ namespace FileManager_Budgo
                     else i1 = subfilecoll;
                     for (int i = subfilecoll; i < i1 + 10; i++)
                     {
-                        Console.Write("└─");
-                        Console.WriteLine(subfile[i]);
+                        Console.Write("─");
+                        Console.WriteLine(subfile[i].Name);
                         subfilecoll++;
                     }
 
@@ -140,8 +135,8 @@ namespace FileManager_Budgo
             {
                 for (int i = 0; i < subfile.Length; i++)
                 {
-                    Console.Write("└─");
-                    Console.WriteLine(subfile[i]);
+                    Console.Write("─");
+                    Console.WriteLine(subfile[i].Name);
                 }
             }
         }
@@ -196,6 +191,7 @@ namespace FileManager_Budgo
             }
 
         }
+
         static void CopyDirectory(string lastDir, string end_dir)
         {
             DirectoryInfo dir_inf = new DirectoryInfo(lastDir);
@@ -214,6 +210,36 @@ namespace FileManager_Budgo
             }
         }
 
+        static void rm(string Dir, string file)
+        {
+            try
+            {
+                if (File.Exists(Path.Combine(Dir, file)))
+                {
+                    File.Delete(Path.Combine(Dir, file));
+
+                }
+                else Directory.Delete(Path.Combine(Dir, file), true);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("Такого файла нет!");
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("Файл используестя");
+            }
+        }
+
+        static void crfile(string Dir, string file)
+        {
+            File.Create(Path.Combine(Dir, file));
+        }
+
+        static void crcat(string Dir, string file)
+        {
+            Directory.CreateDirectory(Path.Combine(Dir, file));
+        }
 
         static void Main(string[] args)
         {
@@ -244,7 +270,10 @@ namespace FileManager_Budgo
                         File.WriteAllText(config, cdCatalog(configDir, newCat));
                         break;
                     case "rm":
-                        
+                        Console.WriteLine("Введите название файла или каталога для удаления: ");
+                        string rmCat = Console.ReadLine();
+                        configDir = File.ReadAllText(config);
+                        rm(configDir, rmCat);
                         break;
                     case "cp":
                         Console.WriteLine("Введите название файла или каталога для копирования: ");
@@ -252,22 +281,34 @@ namespace FileManager_Budgo
                         configDir = File.ReadAllText(config);
                         cp(configDir, cpCat);
                         break;
-                    case "cr":
-                        Console.WriteLine("Введите название файла или каталога для копирования: ");
+                    case "crfile":
+                        Console.WriteLine("Введите название файла для создания ");
+                        string crFile = Console.ReadLine();
+                        configDir = File.ReadAllText(config);
+                        crfile(configDir, crFile);
+                        break;
+                    case "crcat":
+                        Console.WriteLine("Введите название каталога для создания ");
                         string crCat = Console.ReadLine();
                         configDir = File.ReadAllText(config);
-                        cp(configDir, crCat);
+                        crcat(configDir, crCat);
                         break;
                     case "file":
                         configDir = File.ReadAllText(config);
                         DirectoryInfo dirfile = new DirectoryInfo(configDir);
                         Catalog(dirfile);
                         break;
+                    case "info":
+                        configDir = File.ReadAllText(config);
+                        
+                        
+                        break;
                     case "exit":
                         end = true;
                         break;
                     default:
                         Console.WriteLine("Введена не правильная команда");
+                        Console.WriteLine("Введите help для отоброжения команд");
                         break;
                 }
             } while (end == false);
