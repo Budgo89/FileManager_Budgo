@@ -10,7 +10,7 @@ namespace FileManager_Budgo
         {
             Console.WriteLine(@"ls -Выводит список файлов в каталоге");
             Console.WriteLine(@"   ls C:\Source -p 2");
-            Console.WriteLine(@"cd-Переход в каталог \n  cd C:\Source ");
+            Console.WriteLine(@"cd-Переход в каталог");
             Console.WriteLine(@"   cd C:\Source ");
             Console.WriteLine("rm-Удаление файла или каталога");
             Console.WriteLine(@"   rm C:\Source");
@@ -161,17 +161,29 @@ namespace FileManager_Budgo
                 Console.WriteLine("Каталог не найден: " + dirEx.Message);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dirName">Текущая директория</param>
+        /// <param name="Cat">Каталог</param>
+        static string cdCatalog(string dirName, string cat)
+        {
+            string nevDir = dirName + @"\" + cat;
+            DirectoryInfo newDir = new DirectoryInfo(nevDir);
+            Catalog(newDir);
+            return nevDir;
+        }
 
 
         static void Main(string[] args)
         {
             string memu;
             bool end = false;
+            string config = "Config.txt";
+            string configDir = "";
             help();
             do
-            {
-                
+            {                
                 memu = Console.ReadLine();
                 switch (@memu)
                 {
@@ -182,23 +194,28 @@ namespace FileManager_Budgo
                         Console.WriteLine("Введите путь к каталогу: ");
                         string folderPath = Console.ReadLine();
                         DirectoryInfo dir = new DirectoryInfo(folderPath);
+                        File.WriteAllText(config, folderPath);
                         Catalog(dir);
-
                         break;
                     case "cd":
-                        help();
+                        Console.WriteLine("Введите название каталога: ");                        
+                        string newCat = Console.ReadLine();
+                        configDir = File.ReadAllText(config);
+                        File.WriteAllText(config, cdCatalog(configDir, newCat));
                         break;
                     case "rm":
-                        help();
+                        
                         break;
                     case "cp":
-                        help();
+                        
                         break;
                     case "cr":
-                        help();
+                        
                         break;
                     case "file":
-                        help();
+                        configDir = File.ReadAllText(config);
+                        DirectoryInfo dirfile = new DirectoryInfo(configDir);
+                        Catalog(dirfile);
                         break;
                     case "exit":
                         end = true;
