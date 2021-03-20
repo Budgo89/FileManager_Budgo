@@ -148,15 +148,18 @@ namespace FileManager_Budgo
 
         static void Catalog(DirectoryInfo dir)
         {
-            Console.WriteLine(dir.Name);
-
-            DirectoryInfo[] subDirs = dir.GetDirectories();
-            
-            FileInfo[] subfile = dir.GetFiles();
-
-            CatalogDirs(subDirs);
-
-            Catalogfile(subfile);
+            try
+            {
+                Console.WriteLine(dir.Name);
+                DirectoryInfo[] subDirs = dir.GetDirectories();
+                FileInfo[] subfile = dir.GetFiles();
+                CatalogDirs(subDirs);
+                Catalogfile(subfile);
+            }
+            catch (DirectoryNotFoundException dirEx)
+            {
+                Console.WriteLine("Каталог не найден: " + dirEx.Message);
+            }
         }
 
 
@@ -164,10 +167,11 @@ namespace FileManager_Budgo
         static void Main(string[] args)
         {
             string memu;
-            bool end = false;            
+            bool end = false;
+            help();
             do
             {
-                help();
+                
                 memu = Console.ReadLine();
                 switch (@memu)
                 {
