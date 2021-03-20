@@ -241,6 +241,32 @@ namespace FileManager_Budgo
             Directory.CreateDirectory(Path.Combine(Dir, file));
         }
 
+        static void info(string Dir, string file)
+        {
+            
+            FileInfo newFile = new FileInfo(Path.Combine(Dir, file));
+            DirectoryInfo newDir = new DirectoryInfo(Path.Combine(Dir, file));
+            try
+            {
+                if (File.Exists(Path.Combine(Dir, file)))
+                {
+                    Console.WriteLine("Имя " + newFile.Name);
+                    Console.WriteLine("Расширение " + newFile.Extension);
+                    Console.WriteLine("Размер в байтах " + newFile.Length);
+                }
+                if (Directory.Exists(Path.Combine(Dir, file)))
+                {
+                    Console.WriteLine("Имя " + newDir.Name);
+                    Console.WriteLine("Количество вложеных каталогов " + newDir.GetDirectories().Length);
+                    Console.WriteLine("Количество вложеных файлов " + newDir.GetFiles().Length);
+                }
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine("Такого файла нет!");
+            }
+        }
+
         static void Main(string[] args)
         {
             string memu;
@@ -300,8 +326,10 @@ namespace FileManager_Budgo
                         break;
                     case "info":
                         configDir = File.ReadAllText(config);
-                        
-                        
+                        string infoCat = Console.ReadLine();
+                        configDir = File.ReadAllText(config);
+                        info(configDir, infoCat);
+
                         break;
                     case "exit":
                         end = true;
