@@ -5,7 +5,6 @@ D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Deb
 D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\FileManager_Budgo.dll
 D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\ref\FileManager_Budgo.dll
 D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\FileManager_Budgo.pdb
-D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.csprojAssemblyReference.cache
 D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.GeneratedMSBuildEditorConfig.editorconfig
 D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.AssemblyInfoInputs.cache
 D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\obj\Debug\net5.0\FileManager_Budgo.AssemblyInfo.cs
