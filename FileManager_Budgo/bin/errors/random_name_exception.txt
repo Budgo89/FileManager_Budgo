@@ -1,0 +1,20 @@
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\asda'.
+   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.DirectoryInfos(String directory, String expression, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.DirectoryInfo.InternalEnumerateInfos(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at System.IO.DirectoryInfo.GetDirectories(String searchPattern, EnumerationOptions enumerationOptions)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at FileManager_Budgo.Manager.sl(DirectoryInfo dir, Int32 q) in D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\Manager.cs:line 168
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\bin\Debug\net5.0\aasdf'.
+   at System.IO.Enumeration.FileSystemEnumerator`1.CreateDirectoryHandle(String path, Boolean ignoreNotFound)
+   at System.IO.Enumeration.FileSystemEnumerator`1.Init()
+   at System.IO.Enumeration.FileSystemEnumerator`1..ctor(String directory, Boolean isNormalized, EnumerationOptions options)
+   at System.IO.Enumeration.FileSystemEnumerable`1..ctor(String directory, FindTransform transform, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.Enumeration.FileSystemEnumerableFactory.DirectoryInfos(String directory, String expression, EnumerationOptions options, Boolean isNormalized)
+   at System.IO.DirectoryInfo.InternalEnumerateInfos(String path, String searchPattern, SearchTarget searchTarget, EnumerationOptions options)
+   at System.IO.DirectoryInfo.GetDirectories(String searchPattern, EnumerationOptions enumerationOptions)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at FileManager_Budgo.Manager.sl(DirectoryInfo dir, Int32 q) in D:\Програмирование\C#\FileManager_Budgo\FileManager_Budgo\Manager.cs:line 168
